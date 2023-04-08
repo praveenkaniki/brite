@@ -45,16 +45,16 @@ public class EventController {
 
 	private static final String TRACE_ID = "traceId";
 
-	@Operation(summary = "TO GET ALL EVENTS FROM DATABASE",description = "GETTING ALL EVENT FROM THE DATABASE")
-   @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ALL EVENTS", content = {
-                    @Content(schema = @Schema(implementation = EventDetails.class), mediaType = APPLICATION_JSON_VALUE)
-            }),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
-                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            })
-    })
-	
+	@Operation(summary = "TO GET ALL EVENTS FROM DATABASE", description = "GETTING ALL EVENT FROM THE DATABASE")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "ALL EVENTS", content = {
+					@Content(schema = @Schema(implementation = EventDetails.class), mediaType = APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			})
+	})
+
 	@GetMapping(value = "/events", produces = APPLICATION_JSON_VALUE)
 
 	public ResponseEntity<List<EventDetails>> getAllEvents() {
@@ -65,18 +65,18 @@ public class EventController {
 				.body(eventService.getAllEvents());
 	}
 
-	@Operation(summary = "TO GET EVENT BY USING EVENT_ID",description = "To GET EVENT FROM THE DATABASE")
-	 @ApiResponses(value = {
-	            @ApiResponse(responseCode = "302", description = "EVENT FOUND", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
-	                    @Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            })
-	    })
+	@Operation(summary = "TO GET EVENT BY USING EVENT_ID", description = "To GET EVENT FROM THE DATABASE")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "302", description = "EVENT FOUND", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
+					@Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			})
+	})
 
 	@GetMapping(path = "/events/{id}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<EventDetails> getEventById(@Valid @PathVariable String id) throws UserNotFoundException {
@@ -89,18 +89,18 @@ public class EventController {
 
 	}
 
-	@Operation(summary = "TO CRETE NEW EVENT IN DATABASE",description = "TO CREATE EVENT IN DATABASE")
-	 @ApiResponses(value = {
-			 @ApiResponse(responseCode = "201", description = "EVENT CREATED SUCCESFULLY", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "400", description = "INVALID REQUEST CONTENT (BAD-REQUEST)", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            })
-	    })
+	@Operation(summary = "TO CRETE NEW EVENT IN DATABASE", description = "TO CREATE EVENT IN DATABASE")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "EVENT CREATED SUCCESFULLY", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "400", description = "INVALID REQUEST CONTENT (BAD-REQUEST)", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			})
+	})
 
 	@PostMapping(value = "/events", consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity<EventResponse> createEvent(@Valid @RequestBody EventDetails eventDetails) throws Exception {
@@ -109,21 +109,22 @@ public class EventController {
 		return ResponseEntity.status(HttpStatus.CREATED).header(TRACE_ID, MDC.get(TRACE_ID)).body(evntS);
 	}
 
-	@Operation(summary = "TO UPDATE EVENT BY PASSING EVENT_ID",description = "TO UPDATE THE EXISTING EVENT IN DATABASE")
-	 @ApiResponses(value = {
-	            @ApiResponse(responseCode = "200", description = "EVENT UPDATED SUCCESSFULLY", content = {
-	                    @Content(schema = @Schema(implementation = EventDetails.class), mediaType = APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
-	                    @Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            })
-	    })
+	@Operation(summary = "TO UPDATE EVENT BY PASSING EVENT_ID", description = "TO UPDATE THE EXISTING EVENT IN DATABASE")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "EVENT UPDATED SUCCESSFULLY", content = {
+					@Content(schema = @Schema(implementation = EventDetails.class), mediaType = APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
+					@Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			})
+	})
 
 	@PutMapping("/events/event/{id}")
-	public ResponseEntity<EventDetails> updatedEvent(@Valid @PathVariable String id ,@RequestBody EventDetails updatedEvent) {
+	public ResponseEntity<EventDetails> updatedEvent(@Valid @PathVariable String id,
+			@RequestBody EventDetails updatedEvent) {
 		EventDetails eventDetails = eventService.getEventById(id);
 		if (eventDetails == null)
 			throw new UserNotFoundException("EVENT WAS NOT FOUND WITH THE ID : " + id);
@@ -133,18 +134,18 @@ public class EventController {
 				.body(eventService.updateEvent(updatedEvent));
 	}
 
-	@Operation(summary = "DELETE EVENT BY USING EVENT_ID",description = "TO DELETE THE EXISTING EVENT IN DATABASE")
-	 @ApiResponses(value = {
-	            @ApiResponse(responseCode = "200", description = "EVENT DELETED SUCCESSFULLY", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
-	                    @Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            })
-	    })
+	@Operation(summary = "DELETE EVENT BY USING EVENT_ID", description = "TO DELETE THE EXISTING EVENT IN DATABASE")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "EVENT DELETED SUCCESSFULLY", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
+					@Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			})
+	})
 
 	@DeleteMapping("/events/{id}")
 	public ResponseEntity<EventResponse> deleteEvent(@Valid @PathVariable String id) throws UserNotFoundException {
@@ -155,17 +156,17 @@ public class EventController {
 	}
 
 	@Operation(summary = "GET EVENT(S) BY CITY NAME", description = "To GET the Event Filtered By City from Database")
-	 @ApiResponses(value = {
-	            @ApiResponse(responseCode = "302", description = "EVENT FOUND", content = {
-	                    @Content(schema = @Schema(implementation = EventDetails.class), mediaType = APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
-	                    @Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            }),
-	            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
-	                    @Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-	            })
-	    })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "302", description = "EVENT FOUND", content = {
+					@Content(schema = @Schema(implementation = EventDetails.class), mediaType = APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "404", description = "EVENT NOT FOUND", content = {
+					@Content(schema = @Schema(implementation = ErrorforUserNotFoundException.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			}),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR", content = {
+					@Content(schema = @Schema(implementation = EventResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+			})
+	})
 
 	@GetMapping("/events/cityName")
 	public ResponseEntity<List<EventDetails>> getEventByCity(@RequestParam String city) {
@@ -174,6 +175,7 @@ public class EventController {
 
 		return ResponseEntity.status(HttpStatus.FOUND).header(TRACE_ID, MDC.get(TRACE_ID))
 				.body(eventService.getEventByCity(city));
+				//hi praveen kaniki
 	}
 
 }
